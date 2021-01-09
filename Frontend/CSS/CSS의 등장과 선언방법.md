@@ -47,20 +47,24 @@ external 방식은 CSS 파일을 html 내에 위치시키는 것이 아니라 �
 
 ```html
 <html>
-	<head>
-		<link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-		<div>
-			<p>
-				<ul>
-					<li></li>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ul>
-			</p>
-		</div>
-	</body>
+ <head>
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+  <div>
+   <p>
+   <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+   </ul>
+   </p>
+  </div>
+ </body>
 </html>
 ```
+
+만약, 같은 스타일의 웹페이지가 1억개 있다고 했을때 한줄의 코드를 수정하고 싶다면, 1억개의 페이지를 하나하나 수정해줘야 할 것이다. 하지만 외부 .css 파일을 사용하면 .css 파일이 한 줄만 수정하면 되기 때문에 매우 효율적이다. 
+
+또한, 웹페이지를 보여줄 때 한번만 style.css를 다운받으면, 파일이 바뀌기 전까지는 style.css 파일을 우리의 컴퓨터에 저장했다가, 요청할때마다 이 저장된 결과를 가져오므로 속도를 올릴 수 있다. 이러한 기능을 캐싱이라고 한다. **캐싱이 가능하기 때문에 내부적으로 css 코드를 넣는 것보다 css 파일을 따로 만들어 link 해주는 것이 오히려 더 효율적**이다.
