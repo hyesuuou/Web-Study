@@ -21,14 +21,51 @@ span {
 
 - 검색어 > CSS text size property
 - **font-size 속성** 을 이용한다.
-```html
-<style>
-h1 {
-  font-size: small;
-}
-</style>
-```
-![image1](https://user-images.githubusercontent.com/68391767/103760804-fd2f1f00-5058-11eb-8a5e-a6fb4cc411c3.png)
+- font-size의 기본값은 16px이다.
+- font-size속성은 다음과 같은 방법으로 지정할 수 있다. **em**은 기준값에 대해 상대적인 크기를 배수로 지정하여 나타내는 방법이다.
+
+    ```css
+    font-size: 16px;
+    font-size: 1em;
+    ```
+
+- 이는 상속되므로, 하위요소에 까지 영향을 미치게 된다. 아래의 코드에서 웹페이지에 출력되는 myspan 클래스의 글자는 64px이 된다.
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+          body > div {
+            font-size:32px;
+          }
+          .myspan {
+            color : #f00;
+            font-size: 2em;
+          }
+
+        </style>
+      </head>
+      <body>
+
+        <div>
+          <span class="myspan">my text is upper!</span>
+        </div>
+
+      </body>
+    </html>
+    ```
+- 예시: h1태그에 해당하는 내용의 font-size를 small로 한다.
+	```html
+	<style>
+	h1 {
+	  font-size: small;
+	}
+	</style>
+	```
+	![image1](https://user-images.githubusercontent.com/68391767/103760804-fd2f1f00-5058-11eb-8a5e-a6fb4cc411c3.png)
 
 ### 가운데 **정렬**을 하고 싶은 경우
 
@@ -48,15 +85,21 @@ h1 {
 ### 글자 색상을 바꾸고 싶은 경우
 
 - **color** 속성을 사용한다.
-
-```html
-<style>
-  a {
-    color : black;
-  }
-</style>
-```
-![image3](https://user-images.githubusercontent.com/68391767/103761292-c73e6a80-5059-11eb-9e07-140ed6237bcc.png)
+- 만약 red 색상을 표시하고 싶으면 다음과 같은 방법으로 작성할 수 있다. 가장 많이 사용하는 방법은 마지막 방법인 16진수로 표현하는 방법이다.
+	```css
+	color: red;
+	color: rgba(255,0,0,0.5);
+	color: #ff0000;
+	```
+- 예시: a 태그부분의 글자색을 black으로 한다.
+	```html
+	<style>
+	  a {
+	    color : black;
+	  }
+	</style>
+	```
+	![image3](https://user-images.githubusercontent.com/68391767/103761292-c73e6a80-5059-11eb-9e07-140ed6237bcc.png)
 
 ### 밑줄을 긋거나 긋지 않고 싶은 경우
 - **text-decoration** 속성은 밑줄을 만들고 없애는 속성이다.
@@ -73,6 +116,27 @@ h1 {
 ```
 
 ![image4](https://user-images.githubusercontent.com/68391767/103761821-a3c7ef80-505a-11eb-9907-805e306680bc.png)
+
+### 배경을 설정하고 싶은 경우
+
+- 배경색 설정을 위해서는 **background-color 속성**을 사용한다.
+- background-image, background-position, background-repeat ... 등
+- 이를 모두 한 줄로도 정의할 수 있다
+
+    ```css
+    background: #0000ff url(".../gif") no-repeat center top;
+    ```
+    
+### 글씨체, 글꼴을 설정하고 싶은 경우
+
+- **font-family 속성**을 사용한다.
+
+    ```css
+    font-family: "Gulim";
+    font-family: monospace;
+    ```
+
+- 폰트를 여러개 나열하여 상황에 따라 여러개를 사용할 수도 있다. (앞의 것을 사용 못하면 뒤에것이 적용)
 
 ---
 
