@@ -1,5 +1,5 @@
 # Box model
-CSS의 Box model (박스모델)은 html 태그 하나하나를 일종의 박스로 취급하여 부피감을 결정한다.크기는 기본적으로 부모의 element 크기만큼 갖지만, margin, padding, border, outline등을 지정하여 box의 크기에 관한 속성을 지정할 수 있다. 
+CSS의 Box model (박스모델)은 html 태그 하나하나를 일종의 박스로 취급하여 부피감을 결정한다. margin, padding, border, outline등을 지정하여 box의 크기에 관한 속성을 지정할 수 있다. 
 
 </br>
 
