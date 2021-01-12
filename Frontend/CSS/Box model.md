@@ -1,13 +1,7 @@
 # Box model
-CSS의 Box model (박스모델)은 html 태그 하나하나를 일종의 박스로 취급하여 부피감을 결정한다.
+CSS의 Box model (박스모델)은 html 태그 하나하나를 일종의 박스로 취급하여 부피감을 결정한다.크기는 기본적으로 부모의 element 크기만큼 갖지만, margin, padding, border, outline등을 지정하여 box의 크기에 관한 속성을 지정할 수 있다. 
 
-### Block level / inline element
-
- **Block level element**는 화면 전체를 사용하는 태그이다. block을 기본값으로 가지고 있는 대표적인 태그는 h1~6 태그가 있다. 이와 달리, **Inline element**는 딱 자기 컨텐츠 만큼의 부피만 사용하는 태그이다. inline을 기본값으로 가지고 있는 대표적인 태그는 a태그가 있다. 
-
-![image1](https://user-images.githubusercontent.com/68391767/104021951-f6441000-5202-11eb-84e9-f14b661bb791.png)
-
- 물론, 언제든지 display 속성을 이용하여 h태그를 inline 태그처럼 사용하거나, a태그를 block level element 처럼 사용할 수도 있다. display: none; 응 이용하여 화면에서 사라지게 할 수도 있다.
+</br>
 
 ### padding
 
@@ -23,6 +17,14 @@ CSS의 Box model (박스모델)은 html 태그 하나하나를 일종의 박스�
 ```
 
 ![image2](https://user-images.githubusercontent.com/68391767/104022163-43c07d00-5203-11eb-9bb8-daaa61b27097.png)
+
+padding 속성을 늘리면, 엘리먼트의 크기가 달라질 수 있는데 이는 **box-sizing 속성을** 통해 조절할 수 있다. box-sizing 속성의 기본값은 content-box 이지만, 이를 border-box로 바꾸면 element의 크기를 고정하면서 padding 값만 늘릴 수 있다.
+
+```css
+box-sizing: border-box;
+```
+
+</br>
 
 ### margin
 
@@ -59,6 +61,8 @@ h1 {
 ```
 
 ![image4](https://user-images.githubusercontent.com/68391767/104022328-7b2f2980-5203-11eb-987f-2316e4585ca1.png)
+
+</br>
 
 ### 중복 코드 제거로 더 효율적으로 작성하는 법
 
