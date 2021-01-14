@@ -1,0 +1,45 @@
+h1 {
+    text-align: center;
+    font-size: 500%;
+    margin-top:100px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+h3 {
+  color: powderblue;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  font-size : 2em;
+}
+
+body {
+  background-color: black;
+  margin-bottom : 50px;
+}
+
+lable{
+  color: gray;
+  padding: 5px 2px;
+  font-size: 0.7em;
+  text-align: right;
+}
+
+div {
+  text-align: center;
+  font-size: 1.6em;
+  margin-top: 15px;
+}
+
+.login_text{
+  padding: 2px 2px;
+  width : 250px;
+  height: 20px;
+}
+
+#login_button{
+  width: 258px;
+  height: 30px;
+  background-color: powderblue;
+}
