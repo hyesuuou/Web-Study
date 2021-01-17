@@ -1,0 +1,55 @@
+body {
+  background-color: black;
+  color: white;
+}
+.tab {
+  white-space: pre;
+}
+
+.check_page {
+    text-align: center;
+    color: white;
+    margin-top : 30px;
+    margin-bottom : 30px;
+}
+
+.check_page a {
+  color:white;
+  text-decoration: none;
+  font-size: 2em;
+}
+
+.center {
+  text-align: center;
+}
+
+#todo_list li {
+  margin: 20px;
+  border-bottom: 0.5px solid powderblue;
+  padding-bottom: 10px;
+}
+
+
+#today_date {
+  color : powderblue;
+  font-size: 1.3em;
+  border-top: solid 1px white;
+  margin-top: 20px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
+#input_todo{
+  border-radius: 20px;
+  width:500px;
+  height:30px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#input_todo_button {
+  width : 45px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: powderblue;
+}
