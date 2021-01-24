@@ -14,4 +14,4 @@ function clickInputButton(){
   input.value="";
 }
 
-button.addEventListener('click', clickInputButton)
+button.addEventListener('click', clickInputButton);

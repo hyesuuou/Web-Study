@@ -1,3 +1,5 @@
+
+
 module.exports = {
   list : function (fileList){
     var list = '<ul>';
@@ -25,7 +27,7 @@ module.exports = {
     </html>
     `;
   },
-  dailyhtml : function(date,body){
+  dailyhtml : function(date,body,button){
     // 지금 이거 dailyto.html 복붙한거임
     return `
     <!DOCTYPE html>
@@ -56,8 +58,11 @@ module.exports = {
             </div>
           </div>
           <div class="center_top">
-            <input id="input_todo" type="text" placeholder="할 일을 입력하세요.">
-            <input id="input_todo_button" type="button" value="추가">
+            <form action="/dailytodo_create_process" method="post">
+              <input type="hidden" name="id" value="${date}">
+              <input id="input_todo" type="text" name="todo" placeholder="할 일을 입력하세요.">
+              <input id="input_todo_button" type="submit" value="추가">
+            </form>
           </div>
 
           <div class="center_bottom">
@@ -72,7 +77,7 @@ module.exports = {
         </div>
 
       </body>
-      <script src="script.js"></script>
+      <script src="../script.js"></script>
     </html>
     `;
   }

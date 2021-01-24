@@ -5,12 +5,12 @@ var qs = require('querystring');
 var path = require('path');
 var template = require('./lib/template.js');
 
-
 var app = http.createServer(function(request, response){
   var _url = request.url;
   var queryData = url.parse(_url, true).query;
   var pathname = url.parse(_url, true).pathname;
-  console.log(url.parse(_url,true));
+  var now_date ;
+
 
   if (pathname === '/'){
     if (queryData.id === undefined){  //id값 없으면 (home!) -> 사용법daily, weekly, monthly 모아보기 & 날짜 목록 출력할것
@@ -27,6 +27,8 @@ var app = http.createServer(function(request, response){
       fs.readdir('./data', function(error, fileList){
         var filteredId = path.parse(queryData.id).base;
         var date = queryData.id;
+        now_date = queryData.id;
+
         fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
           var html = template.dailyhtml(date, description);
           response.writeHead(200);
@@ -46,8 +48,29 @@ var app = http.createServer(function(request, response){
   }
 
   else if (pathname === '/dailytodo_create_process'){ // 해당 날짜 할일 추가 버튼 누른 후
+    var body = '';
+
+    request.on('data', function(data){
+      body = body + data;
+    });
+    request.on('end', function(){
+      var post = qs.parse(body);
+      var title = post.id;
+      console.log (post);
+      fs.appendFile(`data/${title}`, `<li>${post.todo}</li>`,'utf8', function(err){
+        if (err) throw err;
+        response.writeHead(302, {Location: `/?id=${title}`});
+        response.end();
+        console.log('data append');
+
+
+
+      });
+  });
 
   }
+
+
 
   else if (pathname === '/delete_process'){   // 날짜 삭제
 
