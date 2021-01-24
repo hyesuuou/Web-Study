@@ -9,7 +9,7 @@ var app = http.createServer(function(request, response){
   var _url = request.url;
   var queryData = url.parse(_url, true).query;
   var pathname = url.parse(_url, true).pathname;
-  var now_date ;
+
 
 
   if (pathname === '/'){
@@ -27,7 +27,7 @@ var app = http.createServer(function(request, response){
       fs.readdir('./data', function(error, fileList){
         var filteredId = path.parse(queryData.id).base;
         var date = queryData.id;
-        now_date = queryData.id;
+        //now_date = queryData.id;
 
         fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
           var html = template.dailyhtml(date, description);
@@ -57,15 +57,19 @@ var app = http.createServer(function(request, response){
       var post = qs.parse(body);
       var title = post.id;
       console.log (post);
-      fs.appendFile(`data/${title}`, `<li>${post.todo}</li>`,'utf8', function(err){
-        if (err) throw err;
+      if (post.todo === ''){  // 할일을 입력하지 않으면 -> 추가 하지 않음 
         response.writeHead(302, {Location: `/?id=${title}`});
         response.end();
-        console.log('data append');
+      }
+      else {
+        fs.appendFile(`data/${title}`, `<li>${post.todo}</li>`,'utf8', function(err){
+          if (err) throw err;
+          response.writeHead(302, {Location: `/?id=${title}`});
+          response.end();
+          console.log('data append');
+        });
+      }
 
-
-
-      });
   });
 
   }
