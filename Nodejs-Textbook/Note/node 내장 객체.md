@@ -50,7 +50,7 @@ globalB.js에서 `global.message`에 '안녕하세요'를 대입하고, globalA 
 
 console 객체는 **보통 디버깅을 위해 사용**하며, 노드에서 global 객체 안에 들어 있다.
 
-[Node.js v15.7.0 Documentation](https://nodejs.org/dist/latest-v14.x/docs/api/console.html#console_console)
+[Node.js v15.7.0 Documentation-Console](https://nodejs.org/dist/latest-v14.x/docs/api/console.html#console_console)
 
 ### console.log(내용);
 
@@ -135,7 +135,7 @@ a();
 
 timer를 제공하는 함수는 노드에서 global 객체 안에 들어있다. set~ 을 통해 설정하고, set~ 이 반환한 아이디를 이용해 clear~ 를 사용하여 타이머를 취소할 수 있다.
 
-[Node.js v15.7.0 Documentation](https://nodejs.org/dist/latest-v14.x/docs/api/timers.html#timers_timers)
+[Node.js v15.7.0 Documentation-Timers](https://nodejs.org/dist/latest-v14.x/docs/api/timers.html#timers_timers)
 
 ### setTimeout(콜백함수, 밀리초);
 
@@ -197,4 +197,31 @@ const immediate2 = setImmediate(()=>{
 
 // clearImmediate(아이디) : setImmediate를 취소한다.
 clearImmediate(immediate2);
+```
+
+<br>
+
+## __filename, __dirname
+
+### __filename
+
+[Node.js v15.7.0 Documentation-module_filename](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_filename)
+
+실행 시에 **현재 파일의 경로**로 바뀐다.
+
+```jsx
+// '/Users/Kim' 디렉터리의 'filename.js' 파일을 실행했을 때
+console.log(__filename);  // [출력] /Users/Kim/filename.js
+```
+
+### __dirname
+
+[Node.js v15.7.0 Documentation-module_dirname](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_dirname)
+
+실행 시에 **현재 폴더의 경로**로 바뀐다. path.dirname(__filename)과 같다.
+
+```jsx
+// '/Users/Kim' 디렉터리의 'filename.js' 파일을 실행했을 때
+console.log(__dirname);  // [출력] /Users/Kim
+console.log(path.dirname(__filename)); // [출력] /Users/Kim
 ```
