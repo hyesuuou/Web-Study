@@ -129,3 +129,72 @@ function a(){
 a();
 ```
 
+<br>
+
+## Timer
+
+timer를 제공하는 함수는 노드에서 global 객체 안에 들어있다. set~ 을 통해 설정하고, set~ 이 반환한 아이디를 이용해 clear~ 를 사용하여 타이머를 취소할 수 있다.
+
+[Node.js v15.7.0 Documentation](https://nodejs.org/dist/latest-v14.x/docs/api/timers.html#timers_timers)
+
+### setTimeout(콜백함수, 밀리초);
+
+**주어진 밀리초(1/1000초)이후에 콜백함수를 실행한다**. setTimeout(콜백함수, 0)은 setImmediate(콜백함수)와 헷갈릴 여지가 있으므로 사용하지 않는 것을 권장한다. setTimeout은 아이디를 반환하며, 반환된 아이디를 이용해 `clearTimeout(아이디);` 함수를 사용하면 setTimeout을 취소할 수 있다.
+
+```jsx
+// setTimeout 실행 후 아이디를 timeout에 반환한다.
+const timeout = setTimeout(() => {
+    console.log('1.5초 후 실행');
+}, 1500);
+```
+
+아래 코드에서는  `clearTimeout(timeout2)` 가 2.5초만에 실행되기 때문에, 3초가 지나야 실행되는 setTimeout의 콜백함수는 **실행하지 못한다.**
+
+```jsx
+const timeout2 = setTimeout(()=>{
+    console.log('실행되지 않습니다.'); 
+}, 3000);
+
+setTimeout(()=>{
+    clearTimeout(timeout2);
+}, 2500);
+```
+
+### setInterval(콜백함수, 밀리초);
+
+**주어진 밀리초(1/1000초)마다 콜백함수를 반복해서 실행한다.** 반환된 아이디로 `clearInterval(아이디);` 를 해주면 setInterval을 취소할 수 있다.
+
+아래 코드는 setInterval이 2번 실행되고나서 2.5초가 되면 clearInterval이 실행되기 때문에 더 이상 setInterval이 실행되지 않는다.
+
+```jsx
+// setInterval 실행 후 아이디를 interval에 반환한다.
+const interval = setInterval(()=>{
+    console.log('1초마다 실행');
+}, 1000);
+
+setTimeout(()=>{
+    clearInterval(interval);
+}, 2500);
+```
+
+### setImmediate(콜백함수);
+
+**콜백함수를 즉시 실행한다**. 반환된 아이디로 `clearImmediate(아이디);` 를 하면 setImmediate를 취소할 수 있다.
+
+```jsx
+// setImmediate 실행 후 아이디를 immediate에 반환한다.
+const immediate = setImmediate(()=>{
+    console.log('즉시 실행');
+});
+```
+
+아래의 immediate2는 clearImmediate를 통해 바로 취소되기 때문에 실행되지 않는다.
+
+```jsx
+const immediate2 = setImmediate(()=>{
+    console.log('실행되지 않습니다.');  // 아래 코드때문에 실행되지 않음
+});
+
+// clearImmediate(아이디) : setImmediate를 취소한다.
+clearImmediate(immediate2);
+```
