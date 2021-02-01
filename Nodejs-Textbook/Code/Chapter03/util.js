@@ -8,6 +8,7 @@ const dontUseMe = util.deprecate((x,y) => {
 
 dontUseMe(1,2);
 
+// promisify : 콜백 패턴을 프로미스 패턴으로 바꿀 수 있다.(장점: async, await 패턴까지 사용 가능)
 const randomBytesPromise = util.promisify(crypto.randomBytes);
 randomBytesPromise(64)
     .then((buf)=>{
