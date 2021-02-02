@@ -225,3 +225,127 @@ console.log(__filename);  // [출력] /Users/Kim/filename.js
 console.log(__dirname);  // [출력] /Users/Kim
 console.log(path.dirname(__filename)); // [출력] /Users/Kim
 ```
+
+<br>
+
+## exports, module.exports
+
+[Node.js v15.7.0 Documentation_exports](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_exports)
+
+[Node.js v15.7.0 Documentation_module_exports](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_module_exports)
+
+exports와 module.exports가 **같은 객체를 참조**하기 때문에 동일하게 동작한다. nodejs공식문서 에서도 'A reference to the `module.exports` that is shorter to type' 이라고 나와있다.
+
+```jsx
+console.log(module.exports === exports); // true
+```
+
+아래 두 코드는 동일하게 동작하는 코드이다. `module.exports` 에는 어떤 값이든 대입이 가능하지만, `exports`에는 반드시 객체처럼 속성명과 속성값을 대입해야 한다. 만약 다른 값을 대입하면 참조 관계가 끊기므로 모듈로 사용할 수 없다.
+
+또한 `exports`는 객체만 사용가능하므로 함수는 꼭 `module.exports`로만 쓸 수 있다. 둘은 혼동되기 때문에 동시에 사용하지 않도록 하자!
+
+```jsx
+const odd = '홀수입니다.';
+const even = '짝수입니다.';
+
+// module 객체 사용 
+module.exports = {
+    odd,
+    even
+};
+```
+
+```jsx
+// exports 객체 사용하여 모듈 만들기
+exports.odd = '홀수입니다.';
+exports.even = '짝수입니다.';
+```
+
+<br>
+
+## require
+
+[Node.js v15.7.0 Documentation_require](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_require_id)
+
+**require(id)는** 모듈을 불러오는 객체이다. 여기서 id에는 모듈 이름이나, 모듈의 경로가 들어가고, require은 모듈의 내용을 리턴한다. `require`은 가장 최상단에 위치할 필요가 없다. (마찬가지로 module.exports도 최하단에 위치할 필요없음.)
+
+```jsx
+// 모듈 경로로 불러오기
+const dep1 = require('./dep1');
+
+// 모듈 이름으로 불러오기
+const url = require('url');
+```
+
+### require.cache
+
+한 번 require한 파일은 require.cache에 저장되어 다음에 require할 때에는 새로 불러올 필요 없이 재사용된다. 만약, cache의 속성을 제거한다면 다음 require에 새로 불러올 수 있게 된다.
+
+### require.main
+
+노드  **실행 시 첫 번째 모듈(entry script)** 을 가리킨다. require.cache와 모양이 같다.
+
+```jsx
+// entry.js
+console.log(reauire.main);
+```
+
+```jsx
+$ node entry.js
+Module {
+	id: '.';
+	//path: ...
+	...
+}
+```
+
+현재 파일이 첫 번째 모듈인지 궁금하면 아래와 같이 확인해보면 된다. 만약 현재 파일이 `$ node 현재파일` 로 실행되었으면 true로, `require`에 의해 실행되었다면 false가 리턴될 것이다.
+
+```jsx
+console.log(require.main === module) // 첫번째 모듈: true, 아니면: false
+```
+
+### require의 순환참조 (Circular dependency)
+
+[Node.js v15.7.0 Documentation_cycles](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_cycles)
+
+에러가 발생하지 않고, **순환참조되는 대상을 빈 객체로 만든다.** 
+
+```jsx
+// dep1.js 
+const dep2 = require('./dep2');
+console.log('require dep2', dep2);
+module.exports = () => {
+    console.log('dep2', dep2);
+};
+```
+
+```jsx
+// dep2.js
+const dep1 = require('./dep1');
+
+console.log('require dep1', dep1);
+module.exports = () => {
+    console.log('dep1', dep1);
+};
+```
+
+```jsx
+// dep-run.js
+const dep1 = require('./dep1');
+const dep2 = require('./dep2');
+
+dep1();
+dep2();
+```
+
+```
+$ node dep-run
+require dep1 {}
+require dep2 [Function (anonymous)]
+dep2 [Function (anonymous)]
+dep1 {}
+(node:16263) Warning: Accessing non-existent property 'Symbol(nodejs.util.inspect.custom)' of module exports inside circular dependency
+....
+....
+```
