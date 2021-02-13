@@ -18,11 +18,11 @@ $ npm i -D nodemon
 ```json
 // package.json
 {
-	//....
+	
 	"scripts": {
 	    "start": "nodemon app"
 	}
-	//....
+	
 }
 ```
 
@@ -62,6 +62,37 @@ app.get('/', (req, res)=>{
 ```
 
 app.get 외에도 get부분에 다른 METHOD를 넣어 `app.post`, `app.put`, `app.patch`, `app.delete`, `app.option` 으로 사용할 수 있다.
+
+<br>
+
+## express의 req객체
+
+req 객체는 http 모듈의 req 객체를 확장한 것으로, 요청에 대한 정보를 담고있다.
+
+- `[req.app](http://req.app)` : req 객체를 통해 app 객체에 접근한다. ex) `req.app.get('port')`
+- `req.body` : body-parser 미들웨어가 만드는 요청의 본문(body)를 해석한 객체이다.
+- `req.cookies` : cookie-parser 미들웨어가 만드는 요청의 쿠기를 해석한 객체이다.
+- `req.ip` : 요청의 ip주소가 담겨있다.
+- `req.param` : 라우트 매개변수(:~~)에 대한 정보가 담겨있다.
+- `req.query` : query string에 대한 정보가 담겨 있다.
+- `req.signedCookies` : 서명된 쿠키들이 담겨있다.
+- `req.get(헤더이름)` : 헤더의 값을 가져오고 싶을 때 사용한다.
+
+## express의 res객체
+
+res 객체는 http 모듈의 res 객체를 확장한 것으로, 응답에 대한 정보를 담고있다.
+
+- `[res.app](http://res.app)` : res객체를 통해 app 객체에 접근한다.
+- `res.cookie(키, 값, 옵션)` : 쿠키를 설정하는 메서드
+- `res.clearCookie(키, 값, 옵션)` : 쿠키를 제거하는 메서드
+- `res.end()` : 데이터 없이 응답을 보내는 메서드
+- `res.json(JSON)` : JSON 형식의 응답을 보낸다.
+- `res.render(뷰, 데이터)` : 템플릿 엔진을 렌더링해서 응답할 때 사용한다.
+- `res.send(데이터)` : 데이터(문자열, html, 버퍼, 객체, 배열 등)와 함께 응답을 보낸다.
+- `res.sendFile(경로)` : 경로에 위치한 파일을 응답한다.
+- `res.set(헤더, 값)` : 응답의 헤더를 설정한다.
+- `res.status(코드)` : 응답 시 HTTP 상태코드를 지정한다.
+
 
 ### res.sendFile
 
