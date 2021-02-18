@@ -23,7 +23,7 @@ module.exports = class User extends Sequelize.Model {
             created_at : {
                 type : Sequelize.DATE,
                 allowNull : false,
-                defalutValue: Sequelize.NOW,
+                defaultValue: Sequelize.NOW,
             },
         }, {
             sequelize,
