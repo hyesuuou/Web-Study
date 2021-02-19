@@ -2,7 +2,7 @@ const passport = require('passport');
 const local = require('./localStrategy');
 const kakao = require('./kakaoStrategy');
 const User = require('../models/user');
-const e = require('express');
+
 
 module.exports = () =>{
     // 사용자 정보 객체를 세션에 아이디로 저장함

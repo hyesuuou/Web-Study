@@ -1,4 +1,4 @@
-const express = requie('express');
+const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -55,5 +55,15 @@ router.get('/logout', isLoggedIn, (req, res)=>{
     req.session.destroy();
     res.redirect('/');
 });
+
+// 카카오 로그인 라우터
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback', passport.authenticate('kakao', {
+    failureRedirect: '/',
+}), (req, res)=>{
+    res.redirect('/');
+});
+
 
 module.exports = router;
