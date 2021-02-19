@@ -1,4 +1,5 @@
 const express = require('express');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
@@ -9,11 +10,14 @@ router.use((req, res, next)=>{
     next();
 });
 
-router.get('/profile', (req, res)=>{
+// 로그인 한 상태에서는 내 정보가 뜨도록 
+router.get('/profile', isLoggedIn, (req, res)=>{
     res.render('profile', { title: '내 정보 - NodeBird'});
 });
 
-router.get('/join', (req,res)=>{
+
+// 로그인하지 않은 상태에서만 회원가입 창이 보여야 하므로, isNotLoggedIn에서만 회원가입이 뜨도록.
+router.get('/join', isNotLoggedIn, (req,res)=>{
     res.render('join', { title: '회원가입 - Nodebird'});
 });
 

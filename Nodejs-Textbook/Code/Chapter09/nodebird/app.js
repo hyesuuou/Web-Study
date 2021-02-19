@@ -5,11 +5,15 @@ const path = require('path');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+const passport = require('passport');
 
 dotenv.config();
 const pageRouter = require('./routes/page');
+const { sequelize } = require('./models');
+const passportConfig = require('./passport'); // ./passport/index.js
 
 const app = express();
+passportConfig(); // 패스포트 설정
 
 app.set('port', process.env.PORT || 8001);
 app.set('view engine', 'html'); // 넌적스 사용하기
@@ -17,6 +21,14 @@ nunjucks.configure('views', {
     express: app,
     watch: true,
 });
+
+sequelize.sync({ force: false })
+    .then(()=>{
+        console.log('데이터베이스 연결 성공');
+    })
+    .catch((err)=>{
+        console.error(err);
+    });
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -32,6 +44,8 @@ app.use(session({
         secure: false,
     }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', pageRouter);
 
