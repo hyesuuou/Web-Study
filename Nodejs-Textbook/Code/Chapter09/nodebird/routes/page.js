@@ -1,13 +1,14 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, User } = require('../models');
+const { Post, User, Hashtag } = require('../models');
 
 const router = express.Router();
 
 router.use((req, res, next)=>{
     res.locals.user = null;
-    res.locals.followerCount = 0;
-    res.locals.followerIdList={};
+    res.locals.followerCount = req.user ? req.user.Followers.length : 0;
+    res.locals.followingCount = req.user ? req.user.Followings.length : 0;
+    res.locals.followerIdList = req.user ? req.user.Followings.map(f => f.id) : [];
     next();
 });
 
@@ -22,7 +23,7 @@ router.get('/join', isNotLoggedIn, (req,res)=>{
     res.render('join', { title: '회원가입 - Nodebird'});
 });
 
-router.get('/', (req, res, next)=>{
+router.get('/', async (req, res, next)=>{
     try{
         const posts = await Post.findAll({
             include: {
@@ -43,5 +44,31 @@ router.get('/', (req, res, next)=>{
     
     
 });
+
+// 해시태그로 조회하는 GET /hashtag 라우터
+router.get('/hashtag', async (req, res, next)=>{
+    const query = req.query.hashtag;
+    if (!query){    // 해시태그값이 없는 경우
+        return res.redirect('/');   // 메인페이지로 보냄
+    }
+    try {
+        // 데이터베이스에서 해당 해시태그 검색 
+        const hashtag = await Hashtag.findOne({ where : { title : query}});
+        let posts = [];
+        if (hashtag) {
+            // 포스터 가져오기
+            posts = await hashtag.getPosts({ include: [{ model: User }]});
+        }
+        
+        return res.render('main', {
+            title : `${query} | NodeBird`,
+            twits: posts,
+        });
+    }
+    catch(error){
+        console.error(error);
+        return next(error);
+    }
+})
 
 module.exports = router;
