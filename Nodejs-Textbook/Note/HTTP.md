@@ -1,6 +1,6 @@
 ## HTTP 요청 METHOD
 
-HTTP Method 에는 **GET, POST, PUT, PATCH, DELETE, OPTIONS** 등이 있습니다. 우리가 html 코드에서 <form>태그로 폼데이터를 전송할 때, 지정하는 put, post와 같은 메서드가 바로 http 요청 METHOD 라고 할 수 있습니다.
+HTTP Method 에는 **GET, POST, PUT, PATCH, DELETE, OPTIONS** 등이 있습니다. 우리가 html 코드에서 form태그로 폼데이터를 전송할 때, 지정하는 put, post와 같은 메서드가 바로 http 요청 METHOD 라고 할 수 있습니다.
 
 - HTTP 요청 메서드를 사용하면 주소만 보고도 더 쉽게 어떤 내용을 요청한지 알 수 있어 편리합니다.
 - 한 주소에도 여러가지의 메서드를 사용할 수 있습니다.
