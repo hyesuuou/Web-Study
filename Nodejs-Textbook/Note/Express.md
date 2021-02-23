@@ -106,3 +106,41 @@ app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 ```
+
+### res.redirect([status], path)
+
+express에서 **리다이렉트**를 편하게 할 수 있는 메서드입니다. 
+
+- path 부분에 이동하려는 주소를 넣어줍니다.
+- status부분의 기본값은 302 "found" 입니다.
+
+```jsx
+res.redirect(`/page/${title}`);
+```
+
+path 부분에 전체 주소를 넣어줄 수도 있습니다.
+
+```jsx
+res.redirect('http://example.com');
+```
+
+앞에 슬래쉬(/)를 작성하면 root (/) 부터 주소를 지정할 수도 있습니다.
+
+```jsx
+// localhost:3000/admin/post/new 에서 아래의 코드가 실행되면 localhost:3000/admin 으로 이동됩니다.
+res.redirect('/admin');
+```
+
+앞에 슬래쉬(/)를 작성하지 않고 바로 주소를 작성하면, 현재 페이지로부터의 주소로 리다이렉트 됩니다.
+
+```jsx
+// localhost:3000/blog/admin/ 에서 아래의 코드가 실행되면 localhost:3000/blog/admin/post/new 로 이동됩니다.
+res.redirect('post/new');
+```
+
+path-relative redirects도 가능합니다.
+
+```jsx
+// localhost:3000/admin/post/new 에서 아래의 코드가 실행되면 localhost:3000/admin/post로 이동합니다.
+res.redirect('..');
+```
