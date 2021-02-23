@@ -50,3 +50,31 @@ app.use((err, req, res, next)=>{
     res.status(500).send(err.message);
 });
 ```
+
+<br>
+
+## 미들웨어의 종류
+
+### body-parser 미들웨어
+
+body-parser은 사용자가 전송한 **본문의 데이터를 해석하여 `req.body` 객체로 만들어주는 역할을 하는 미들웨어**입니다. body-parser 미들웨어는 멀티파트 데이터(이미지, 동영상, 파일)를 처리하지 못하므로 이때는 multer 모듈을 사용해야 합니다.
+
+설치는 `$ npm intall body-parser` 로 합니다.
+
+```jsx
+var bodyParser = require('body-parser')
+```
+
+요청 데이터의 종류에 따라 `bodyParser.unlencoded()`과 `bodyParser.json()` 으로 나눠집니다. 
+
+- **form 데이터를 전송하는 경우**, unlencoded()를 사용합니다. 이때 extended 속성이 false인 경우에는 querystring 모듈을 사용하여 쿼리스트링을 해석하고, true인 경우에는 qs 모듈을 사용하여 쿼리스트링을 해석합니다. (qs 모듈은 querystring 모듈의 기능을 확장한 모듈입니다.)
+    - 만약 URL-encoded 형식으로 *name=kim&study=node* 를 본문으로 보내면, `req.body` 부분에 `{ name: 'kim', study: 'node' }` 가 들어갑니다.
+- **json 형식의 데이터를 전송하는 경우**에는 json()을 사용합니다.
+    - json 형식으로 `{ name: 'kim', study: 'node' }` 가 들어간다면, 이 내용이 그대로 `req.body`에 들어갑니다.
+
+```jsx
+// form 전송시
+app.use(bodyParser.urlencoded({ extended: false }))
+// json 전송시
+app.use(bodyParser.json())
+```
