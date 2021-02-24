@@ -78,3 +78,22 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // json 전송시
 app.use(bodyParser.json())
 ```
+
+<br>
+
+### compression 미들웨어
+
+웹서버가 웹브라우저에게 응답할 때, 그 **내용을 압축하여 용량을 줄입니다**. 
+
+설치는 `$ npm install compression` 으로 합니다.
+
+```jsx
+var compression = require('compression')
+```
+
+`compression()` 은 미들웨어를 반환하고, 반환된 미들웨어를 `app.use`에 장착하여 사용합니다. compression을 사용하면 [header] - [Response Headers] - [Content-encoding]은 **gzip** 으로 나타납니다.
+
+```jsx
+// compress all responses
+app.use(compression())
+```
