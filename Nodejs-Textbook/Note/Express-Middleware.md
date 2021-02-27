@@ -1,59 +1,109 @@
-# 미들웨어(middleware)
+# Middleware
 
-미들웨어(middleware)는 **요청과 응답의 중간에 위치**하여 받은 요청을 조작하여 기능을 추가하거나, 나쁜 요청을 걸러내는 등의 역할을 한다. 라우터와 에러 핸들러도 미들웨어의 일종이다.
+미들웨어(middleware)는 **요청과 응답의 중간에 위치**하여 받은 요청을 조작하여 기능을 추가하거나, 나쁜 요청을 걸러내는 등의 역할을 합니다. 라우터와 에러 핸들러도 미들웨어의 일종이라고 할 수 있습니다.
 
-## 미들웨어의 사용
+- `(req, res, next)` 3개의 인자를 가지고 있습니다.
+- 미들웨어는 여러 개 장착할 수 있고, 이는 **위에서 아래로** 실행됩니다.
+- `next()` 메서드를 이용하여 다음 미들웨어로 넘어갈 수 있습니다. next() 없이는 다음 미들웨어를 실행할 수 없습니다.
+- `next(인수)`에 인수를 넣어 특정 미들웨어로 이동시킬 수도 있습니다.
 
-### app.use
+## Application-level middleware
 
-미들웨어는 `app.use(미들웨어)` 꼴로 사용한다.
+`app.use(미들웨어)`나 `app.METHOD(미들웨어)` 를 통해 사용되는 미들웨어를 **application-level middleware**라고 합니다. (여기서 METHOD는 HTTP 요청 메서드를 말하며, 대표적으로 get, post, put 등이 있습니다.) 
 
-- `app.use`에 매개변수가 `(req, res, next)` 인 함수를 넣는다.
-- `next()`는 다음 미들웨어로 넘어가는 함수로, 미들웨어를 여러개 연결할 수는 있지만, next가 없으면 다음 미들웨어를 실행할 수 없다.
+- application-level middleware는 어플리케이션 전역에서 사용되며, **어플리케이션에 요청이 발생할 때마다 실행**됩니다.
 
 ```jsx
 app.use((req, res, next)=> {
-	console.log('모든 요청에 다 실행됨.');
+  console.log('어떤 요청이든 다 실행됨.');
+  next();
+});
+```
+
+- `app.use`나 `app.Method` 의 주소가 지정되어 있으면, **해당하는 주소에서만 실행**됩니다.
+
+```jsx
+app.use('/abc'. (req, res, next)=>{
+  console.log('/abc로 시작하는 요청에서 미들웨어 실행');
+  next();
+});
+```
+
+- **해당하는 method 요청에서만 실행**됩니다.
+
+```jsx
+app.post('/', (req, res, next)=>{
+  console.log('post 요청에서만 실행');
 	next();
 });
 ```
 
-첫 번째 인수로 주소를 넣어 주면 해당하는 요청에서만 실행된다.
-
 ```jsx
-app.use('/abc', (req, res, next)=>{
-    console.log('abc로 시작하는 요청에서 미들웨어 실행')
+app.get('/', (req, res, next)=>{
+  console.log('get 요청에서만 실행');
+  next();
 });
 ```
 
-### app.METHOD
+## Router-level middleware
 
-METHOD는 미들웨어가 처리하는 요청들 (get, post, put 등) 을 말한다. app.get(미들웨어), app.post(미들웨어), app.put(미들웨어) 등의 방식으로 사용한다. 
+Application-level 미들웨어와 기본적인 동작 방식은 같습니다. 하지만 Router-level middleware는 `express.Router()` 인스턴스를 기반으로 하기 때문에 `router.use()`나 `router.METHOD()`에 장착하여 사용합니다.
 
 ```jsx
-app.post('/abc'. (req, res, next)=>{
-	console.log('abc로 시작하는 post요청에서 미들웨어 실행');
-	next();
+var router = express.Router();
+```
+
+- 해당 라우터 요청이 있을 때마다 실행됩니다.
+
+```jsx
+router.use(function (req, res, next) {
+  console.log('해당 라우터의 요청이 있을 때마다 실행됨');
+  next();
 });
 ```
 
-### 에러 처리 미들웨어
-
-매개 변수를 `(err, req, res, next)` 로 4개를 넣어 사용한다. 에러 처리 미들웨어는 익스프레스가 기본적으로 에러를 처리하긴 하지만, 직접 연결해 주는 것이 좋다. 위치는 가장 아래쪽에 넣도록 하는 것이 좋다.
-
-- `err` 는 첫번째 매개변수로, 여기에는 에러에 관한 정보가 담겨있다.
-- `res.status` 메서드를 이용하여 HTTP 상태코드를 지정할 수 있다. (기본값: 200)
+- 만약 localhost:3000/user/page1 GET요청이 들어온다면?
 
 ```jsx
-app.use((err, req, res, next)=>{
-    console.error(err);
-    res.status(500).send(err.message);
+// app.js
+var app = express();
+var userRouter = require('user.js');
+
+app.use('/user', userRouter);
+```
+
+```jsx
+// user.js (/user 라우터 코드)
+var app = express();
+var router = express.Router();
+
+router.get('/page1', (req, res, next)=>{
+  console.log('localhost:3000/user/page1 이 요청되면 실행');  // 이 부분 실행됨!
+});
+
+router.get('/page2', (req, res, next)=>{
+  console.log('localhost:3000/user/page2 이 요청되면 실행');
 });
 ```
+
+## Error-handling middleware
+
+**에러 처리를 담당하는 미들웨어**를 error-handling middleware 라고 합니다.
+
+- 4개의 인수 `(err, req, res, next)`를 가지고 있으며, err에는 에러에 대한 정보가 담겨 있습니다.
+
+```jsx
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+```
+
+- 에러가 발생할 수 있는 미들웨어에서 `next(err)`를 해 주면, 에러처리 미들웨어로 넘어가게 됩니다.
 
 <br>
 
-## 미들웨어의 종류
+## 자주 쓰는 미들웨어 
 
 ### body-parser 미들웨어
 
