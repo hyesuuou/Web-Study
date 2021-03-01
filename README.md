@@ -10,6 +10,9 @@
 - [Node와 npm 설치 확인](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/nodejs와%20npm%20설치확인.md#nodejs-설치확인)
 - [Node의 내장객체](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/node%20내장%20객체.md#node-내장-객체)
 - [express 사용하기](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/Express.md#express-익스프레스)
+- [Router](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/Router.md#router)
+  - [route parameters](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/Router.md#route-parameters)
+  - [express.Router-라우터 파일 분리](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/Router.md#expressrouter)
 - [미들웨어](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/Express-Middleware.md#미들웨어middleware)
 - [passport 모듈]
   - [serializeUser / deserializeUser](https://github.com/hyesuuou/Web-Study/blob/main/Nodejs-Textbook/Note/passport%20module.md#serializeuser--deserializeuser)
