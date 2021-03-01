@@ -4,6 +4,8 @@ var bodyParser = require('body-parser')
 var compression = require('compression');
 var topicRouter = require('./routes/topic');
 var indexRouter = require('./routes');
+var helmet = require('helmet')
+app.use(helmet())
 
 const app = express()
 const port = 3000
