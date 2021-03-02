@@ -21,3 +21,47 @@ Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
   `Permanent=cookies; Max-age=${60*60*24*30}`,
 ]
 ```
+
+<br>
+
+## Secure
+
+웹 브라우저와 웹 서버가 **HTTPS로 통신하는 경우에만** 쿠키가 전송됩니다. `Secure` 이라는 속성을 추가하면 사용할 수 있습니다.
+
+```jsx
+'Set-Cookie': 'Secure=Secure; Secure'
+```
+
+- response headers
+
+![](https://user-images.githubusercontent.com/68391767/109654844-0a264580-7ba6-11eb-91da-c3c4e28114d8.png)
+
+- Request headers
+
+<img width="662" alt="image" src="https://user-images.githubusercontent.com/68391767/109655099-3cd03e00-7ba6-11eb-9e1b-dcfd4e534f0b.png">
+
+<br>
+
+## HttpOnly
+
+`HttpOnly` 속성을 추가하면, JavaScript에서 쿠키에 접근할 수 없습니다. 때문에 console에서 `document.cookie`로 불러올 수 없습니다.
+
+```jsx
+'Set-Cookie':[
+            'yummy_cookie=choco', 
+            'tasty_cookie=strawberry',
+            `Permanent=cookies; Max-age=${60*60*24*30}`,
+            'Secure=Secure; Secure',
+            'HttpOnly=HttpOnly; HttpOnly'
+        ]
+```
+
+<img alt="image" src="https://user-images.githubusercontent.com/68391767/109655157-4bb6f080-7ba6-11eb-959c-54188f52b29b.png">
+
+
+Application-cookies 창에서는 HttpOnly 가 나와있는 것을 볼 수 있습니다.
+
+<img width="649" alt="image" src="https://user-images.githubusercontent.com/68391767/109655185-53769500-7ba6-11eb-8d20-fade11dee8fc.png">
+
+
+하지만, 콘솔창에서 자바스크립트를 이용해 쿠키에 접근하면, HttpOnly에 해당하는 쿠키의 내용은 출력되지 않습니다.
